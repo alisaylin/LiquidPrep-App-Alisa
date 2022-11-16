@@ -6,8 +6,11 @@ import { ThemePalette } from '@angular/material/core';
 import { Crop } from '../../models/Crop';
 import { WeatherDataService } from 'src/app/service/WeatherDataService';
 import { TodayWeather } from 'src/app/models/TodayWeather';
+import {Translation} from 'src/app/models/translation';
 import { CropDataService } from 'src/app/service/CropDataService';
 import { DateTimeUtil } from 'src/app/utility/DateTimeUtil';
+import {LanguageTranslatorService} from '../../service/LanguageTranslatorService';
+import { Subscribable } from 'rxjs';
 
 @Component({
   selector: 'app-my-crops',
@@ -16,6 +19,7 @@ import { DateTimeUtil } from 'src/app/utility/DateTimeUtil';
 })
 export class MyCropsComponent implements OnInit {
   myCrops: Crop[];
+  translations: string[] = [''];
   displayedColumns: string[] = ['EmptyColumnTitle'];
 
   tabs = ['My Crops', 'Settings'];
@@ -29,14 +33,17 @@ export class MyCropsComponent implements OnInit {
   public temperatureMax = null;
   public temperatureMin = null;
   public todayWeather = null;
+  public translation = null;
   public myCropStatus: 'no-crop' | 'crop-selected' = 'no-crop';
   public errorMessage = '';
+  result: Object;
 
   constructor(
-    private router: Router, private location: Location,
+    private router: Router, private location: Location, private languageService: LanguageTranslatorService,
     private weatherService: WeatherDataService, private cropDataService: CropDataService
     ) {
     this.updateWeatherInfo();
+    this.updateTranslation();
   }
 
   ngOnInit(): void {
@@ -47,14 +54,12 @@ export class MyCropsComponent implements OnInit {
         this.myCropStatus = 'crop-selected';
       }
     });
-
     this.currentDate =  formatDate(new Date(), 'MMMM d, yyyy', 'en');
-
+    // this.currentDate = this.translation;// this.languageService.getTranslation("November 15, 2022", "spanish");
     // TODO: Add weather template
     /*this.dataService.getWeatherInfo().subscribe((weatherInfo: WeatherResponse) => {
       const todayWeather = WeatherService.getInstance().createTodayWeather(weatherInfo);
     });*/
-
   }
 
   public tabClicked(tab) {
@@ -113,6 +118,14 @@ export class MyCropsComponent implements OnInit {
         }
     );
   }
+  updateTranslation() {
+    this.languageService.getTranslation("November 16, 2022", "spanish").subscribe((response: any) => {
+       this.translation = (response.translations[0].translation);
+       this.currentDate = (this.translation);
+        
+      });
+  }
+
 
   showError(msg) {
     alert(msg ? msg : this.errorMessage);
