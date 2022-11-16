@@ -5,6 +5,7 @@ import {Location} from '@angular/common';
 import { CropListResponse } from '../../models/api/CropListResponse';
 import { Crop } from '../../models/Crop';
 import { CropDataService } from '../../service/CropDataService';
+import {LanguageTranslatorService} from '../../service/LanguageTranslatorService';
 
 @Component({
   selector: 'app-select-crop',
@@ -13,6 +14,8 @@ import { CropDataService } from '../../service/CropDataService';
 })
 
 export class SelectCropComponent implements OnInit{
+
+  public addACrop = "Add a crop";
 
   searchText = '';
   title = 'Select Crop';

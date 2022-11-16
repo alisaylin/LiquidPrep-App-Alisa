@@ -19,14 +19,20 @@ import { Subscribable } from 'rxjs';
 })
 export class MyCropsComponent implements OnInit {
   myCrops: Crop[];
-  translations: string[] = [''];
   displayedColumns: string[] = ['EmptyColumnTitle'];
 
   tabs = ['My Crops', 'Settings'];
   activeTab = this.tabs[0];
   background: ThemePalette = undefined;
 
+  
+  public selectedLanguage = 'spanish';
+  public today = 'Today, ';
   public currentDate = '';
+  public addYourCrop = 'Add your first crop';
+  public selectOption = 'Select the crop for your watering advice!';
+  public add = 'Add';
+  translations = [this.today, this.addYourCrop, this.selectOption, this.add];
   public weatherIconDay = '';
   public weatherIconNight = '';
   public loading = false;
@@ -119,10 +125,16 @@ export class MyCropsComponent implements OnInit {
     );
   }
   updateTranslation() {
-    this.languageService.getTranslation("November 16, 2022", "spanish").subscribe((response: any) => {
+    this.languageService.getTranslation(this.translations, this.selectedLanguage).subscribe((response: any) => {
+       this.today = (response.translations[0].translation);
+       this.addYourCrop = (response.translations[1].translation);
+       this.selectOption = (response.translations[2].translation);
+       this.add = (response.translations[3].translation);
+      });
+      // don't know how to make date into string
+    this.languageService.getTranslation("November 16, 2022", this.selectedLanguage).subscribe((response: any) => {
        this.translation = (response.translations[0].translation);
        this.currentDate = (this.translation);
-        
       });
   }
 

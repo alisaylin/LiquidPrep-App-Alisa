@@ -13,7 +13,7 @@ export class LanguageTranslatorService {
     console.log('sending request!!')
     const httpOptions = { headers: new HttpHeaders({
       'Content-Type':  'application/json',
-      'Authorization': 'Basic ' + btoa(""),
+      'Authorization': 'Basic ' + btoa("apikey:ZghpOfAbpgdLuoAgV7-kOEYlG6CJSTem-wSHo9NrWues"),
     //   'observe': 'response'
     }),
     // observe: 'response'
@@ -33,7 +33,7 @@ export class LanguageTranslatorService {
     if (language == "spanish") {
         model = "en-es";
     }
-    let body = {"text": [text], "model_id":"en-es"}
+    let body = {"text": text, "model_id":"en-es"}
 
     return this.http.post(this.apiUrl, body, httpOptions);
   }
