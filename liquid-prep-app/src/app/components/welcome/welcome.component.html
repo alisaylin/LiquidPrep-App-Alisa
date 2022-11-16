@@ -1,10 +1,23 @@
 <mat-toolbar style="background-color: #fff">
   <div class="container" fxLayout="row" fxFlexFill fxLayoutAlign="end center" >
     <button mat-icon-button aria-label="read text" (click)="onGetStarted()">
-      <span Class="tool-bar-text">SKIP</span>
+      <span Class="tool-bar-text">{{ skip }}</span>
     </button>
   </div>
+
 </mat-toolbar>
+  <div class="select-language" fxLayoutAlign="center">
+    <mat-form-field appearance="fill">
+      <mat-label>Language</mat-label>
+      <select matNativeControl>
+        <option value="English">English</option>
+        <option value="Spanish">Español</option>
+        <option value="French">Français</option>
+        <option value="Korean">한국어</option>
+        <option value="Chinese">中国</option>
+      </select>
+    </mat-form-field>
+  </div>
 
 <div class="content-container">
   <swiper #swiper class="swiper-container"
@@ -18,8 +31,8 @@
       <div class="container" fxLayout="column" fxFlexFill fxLayoutAlign="center center">
         <img src="assets/welcome-bucket.png" alt="welcome 1" width="196" height="302">
         <div class="container text-area" fxLayout="column" fxFlexWrap fxLayoutAlign="center center" >
-          <p class="title">Save water</p>
-          <p class="description">Only use the amount of water your crops need</p>
+          <p class="title">{{ saveWater }}</p>
+          <p class="description">{{ useOnly }}</p>
         </div>
       </div>
     </div>
@@ -28,8 +41,8 @@
       <div class="container" fxLayout="column" fxFlexFill fxLayoutAlign="center center" >
         <img src="assets/welcome-plant.png" alt="welcome 2" width="196" height="302">
         <div class="container text-area" fxLayout="column" fxFlexWrap fxLayoutAlign="center center" >
-          <p class="title">Grow your Crop</p>
-          <p class="description">Your crop has different water needs at every stage of growth</p>
+          <p class="title">{{ grow }}</p>
+          <p class="description">{{ differentWater }}</p>
         </div>
       </div>
     </div>
@@ -38,8 +51,8 @@
       <div class="container" fxLayout="column" fxFlexFill fxLayoutAlign="center center" >
         <img src="assets/welcome-measure.png" alt="welcome 3" width="196" height="302">
         <div class="container text-area" fxLayout="column" fxFlexWrap fxLayoutAlign="center center" >
-          <p class="title">Measure</p>
-          <p class="description">Soil moisture level is the key to accurate watering advice</p>
+          <p class="title">{{ measure }}</p>
+          <p class="description">{{ soilMoisture }}</p>
         </div>
       </div>
     </div>
@@ -53,13 +66,13 @@
 
     <button [ngClass]="{'invisible': isFirstSlide}" mat-icon-button style="margin-right: 24px">
       <mat-icon class="blue-icon" (click)="onSlideNav('back')">navigate_before</mat-icon>
-      <span Class="tool-bar-text" (click)="onSlideNav('back')">BACK  </span>
+      <span Class="tool-bar-text" (click)="onSlideNav('back')">{{ back }}</span>
     </button>
 
     <app-slide-indicator [current]="curIndex" [length]="3"></app-slide-indicator>
 
     <button  mat-icon-button style="margin-right: 24px">
-      <span Class="tool-bar-text" (click)="onSlideNav('next')">NEXT</span>
+      <span Class="tool-bar-text" (click)="onSlideNav('next')">{{ next }}</span>
       <mat-icon class="blue-icon" (click)="onSlideNav('next')">navigate_next</mat-icon>
     </button>
 

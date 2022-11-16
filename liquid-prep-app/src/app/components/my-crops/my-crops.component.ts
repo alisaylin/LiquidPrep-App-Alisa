@@ -6,7 +6,6 @@ import { ThemePalette } from '@angular/material/core';
 import { Crop } from '../../models/Crop';
 import { WeatherDataService } from 'src/app/service/WeatherDataService';
 import { TodayWeather } from 'src/app/models/TodayWeather';
-import {Translation} from 'src/app/models/translation';
 import { CropDataService } from 'src/app/service/CropDataService';
 import { DateTimeUtil } from 'src/app/utility/DateTimeUtil';
 import {LanguageTranslatorService} from '../../service/LanguageTranslatorService';
@@ -25,7 +24,7 @@ export class MyCropsComponent implements OnInit {
   activeTab = this.tabs[0];
   background: ThemePalette = undefined;
 
-  
+  /* FOR TRANSLATION */
   public selectedLanguage = 'spanish';
   public today = 'Today, ';
   public currentDate = '';
@@ -33,6 +32,7 @@ export class MyCropsComponent implements OnInit {
   public selectOption = 'Select the crop for your watering advice!';
   public add = 'Add';
   translations = [this.today, this.addYourCrop, this.selectOption, this.add];
+
   public weatherIconDay = '';
   public weatherIconNight = '';
   public loading = false;

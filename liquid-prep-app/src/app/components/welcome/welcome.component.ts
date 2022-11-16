@@ -3,7 +3,7 @@ import { SwiperOptions } from 'swiper';
 import { Router, ActivatedRoute} from '@angular/router';
 import {LOCAL_STORAGE, StorageService} from 'ngx-webstorage-service';
 import {SwiperComponent} from "ngx-swiper-wrapper";
-
+import {LanguageTranslatorService} from '../../service/LanguageTranslatorService';
 
 @Component({
   selector: 'app-welcome',
@@ -14,12 +14,29 @@ import {SwiperComponent} from "ngx-swiper-wrapper";
 
 export class WelcomeComponent implements OnInit {
 
+  /* FOR TRANSLATION */
+  public skip = "skip";
+  public saveWater = "Save water";
+  public useOnly = "Only use the amount of water your crops need";
+  public grow = "Grow your Crop";
+  public differentWater = "Your crop has different water needs at every stage of growth";
+  public measure = "measure";
+  public soilMoisture = "Soil moisture level is the key to accurate watering advice";
+  public back = "back";
+  public next = "next";
+  public selectedLanguage = "spanish";
+
   private IS_FIRST_START = `first-start`;
+
+  translations = [this.skip, this.saveWater, this.useOnly, this.grow, this.differentWater, this.measure, this.soilMoisture, this.back, this.next];
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    @Inject( LOCAL_STORAGE ) private storage: StorageService) { }
+    private languageService: LanguageTranslatorService,
+    @Inject( LOCAL_STORAGE ) private storage: StorageService) { 
+      this.updateTranslation();
+    }
 
   public config: SwiperOptions = {
     a11y: {enabled: true},
@@ -52,6 +69,22 @@ export class WelcomeComponent implements OnInit {
     if (this.firstStart !== undefined && this.firstStart === false){
       this.router.navigate(['my-crops']).then(r => {});
     }
+  }
+
+  updateTranslation() {
+    this.languageService.getTranslation(this.translations, this.selectedLanguage).subscribe((response: any) => {
+      // [this.skip, this.saveWater, this.useOnly, this.grow, this.differentWater, this.measure, this.soilMoisture, this.back, this.next]
+      this.skip = (response.translations[0].translation);
+      this.saveWater = (response.translations[1].translation);
+      this.useOnly = (response.translations[2].translation);
+      this.grow = (response.translations[3].translation);
+      this.differentWater = (response.translations[4].translation);
+      this.measure = (response.translations[5].translation);
+      this.soilMoisture = (response.translations[6].translation);
+      this.back = (response.translations[7].translation);
+      this.next = (response.translations[8].translation);
+      console.log(response.translations[0].translation);
+      });
   }
 
   public onGetStarted(){

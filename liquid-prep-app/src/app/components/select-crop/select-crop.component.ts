@@ -16,6 +16,8 @@ import {LanguageTranslatorService} from '../../service/LanguageTranslatorService
 export class SelectCropComponent implements OnInit{
 
   public addACrop = "Add a crop";
+  public selectedLanguage = "spanish";
+  translations = [this.addACrop];
 
   searchText = '';
   title = 'Select Crop';
@@ -28,8 +30,10 @@ export class SelectCropComponent implements OnInit{
   NO_NEW_CROPS = '';
   public requestingCrop = true;
 
-  constructor(private router: Router, private location: Location,
-              private cropService: CropDataService) { }
+  constructor(private router: Router, private location: Location, private languageService: LanguageTranslatorService,
+              private cropService: CropDataService) {
+                this.updateTranslation();
+               }
 
   ngOnInit(): void {
 
@@ -48,6 +52,15 @@ export class SelectCropComponent implements OnInit{
           alert('Could not get crop list: ' + err);
         }
       );
+  }
+
+  updateTranslation() {
+    // for (let i = 0; i < this.cropsList.length; i++) {
+    //   console.log(this.cropsList[i]);
+    // }
+    this.languageService.getTranslation(this.translations, this.selectedLanguage).subscribe((response: any) => {
+       this.addACrop = (response.translations[0].translation);
+      });
   }
 
   backToMyCrops(){

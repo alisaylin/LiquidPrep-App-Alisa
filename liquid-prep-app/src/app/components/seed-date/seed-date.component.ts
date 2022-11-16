@@ -17,6 +17,7 @@ export class SeedDateComponent implements OnInit {
   userSelectiondate: Date;
   maxDate = new Date();
 
+  public selectSeedDate = "Select a seed date";
   constructor(
     private router: Router,
     private location: Location,
